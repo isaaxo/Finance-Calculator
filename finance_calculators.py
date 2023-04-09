@@ -7,14 +7,8 @@ def investment_calculator() -> None:
     simple interest & compound interest.
     :return:
     """
-    # Requesting the user for inputs
-    print("Welcome to the investment calculator.")
-    money_depositing: float = float(input("Please enter the amount of money to be deposited: \n"))
-    interest_rate: int = int(input("Enter interest rate: \n"))
-    years: int = int(input("Enter number of years for your investment: \n"))
 
     while True:
-        # Choosing between compound and simple interest
         try:
             # Requesting the user for inputs
             print("Welcome to the investment calculator.")
