@@ -1,88 +1,123 @@
 import math
 
-# Below are two financial calculators for investment and bond.
-# The investment calculator has two formulas, simple interest & compound interest.
-# The lower() method is used to validate the user inputs even if the format is upper case or mixed case.
 
-# Requesting user to choose between investment and bond calculator
-choose_calculator = input("Choose either the 'investment' or 'bond' from the menu below to proceed: \n"
-                          "\ninvestment       - to calculate the amount of interest you'll earn on interest "
-                          "\nbond             - to calculate the amount of interest you'll earn on interest: \n")
-
-# Printing out an error message to the user
-choose_calculator = choose_calculator.lower()
-if choose_calculator != 'investment' and choose_calculator != 'bond':
-
-    print("You have entered a wrong selection, please check your spelling and try again.\n")
-    choose_calculator = input("Choose either the 'investment' or 'bond' from the menu below to proceed: \n"
-                              "\ninvestment       - to calculate the amount of interest you'll earn on interest "
-                              "\nbond             - to calculate the amount of interest you'll earn on interest: \n")
-
-# Calculating investment
-if choose_calculator == 'investment':
-    choose_calculator = choose_calculator.lower()
-
+def investment_calculator() -> None:
+    """
+    This function calculates accumulation of interests using
+    simple interest & compound interest.
+    :return:
+    """
     # Requesting the user for inputs
-    money_depositing = float(input("Please enter the amount of money to be deposited: \n"))
-    interest_rate = int(input("Enter interest rate: \n"))
-    years = int(input("Enter number of years for your investment: \n"))
+    print("Welcome to the investment calculator.")
+    money_depositing: float = float(input("Please enter the amount of money to be deposited: \n"))
+    interest_rate: int = int(input("Enter interest rate: \n"))
+    years: int = int(input("Enter number of years for your investment: \n"))
 
-    # Choosing between compound and simple interest
-    interest = input("Do you want 'simple' or 'compound' interest: \n")
-    interest = interest.lower()
+    while True:
+        # Choosing between compound and simple interest
+        try:
+            # Requesting the user for inputs
+            print("Welcome to the investment calculator.")
+            money_depositing: float = float(input("Please enter the amount of money to be deposited: \n"))
+            interest_rate: int = int(input("Enter interest rate: \n"))
+            years: int = int(input("Enter number of years for your investment: \n"))
+            interest: int = int(input("Do you want 'simple' or 'compound' interest: \n"
+                                      "Enter 1 for simple interest and 2 for compound interest: \n"))
 
-    # Calculating final amount using simple interest
-    if interest == 'simple':
+            # Calculating final amount using simple interest
+            if interest == 1:
+                # Assigning values to the formula's variables
+                p = money_depositing
+                r = interest_rate / 100
+                t = years
 
-        # Assigning values to the formula's variables
-        P = money_depositing
-        r = interest_rate / 100
-        t = years
+                # Formula for calculating simple interest
+                a = p * (1 + r * t)
 
-        # Formula for calculating simple interest
-        A = P * (1 + r * t)
+                # Rounding to two decimal place
+                a = round(a, 2)
+                print(f"\nThe final amount when using simple interest with monthly payment of R{p} \n"
+                      f"for {years} years with an interest rate of {interest_rate}% is R{a}\n")
+                break
 
-        # Rounding to two decimal place
-        A = round(A, 2)
-        print(f"\nThe final amount when using simple interest with monthly payment of R{P} \n"
-              f"for {years} years with an interest of {interest_rate}% is R{A}")
+            if interest == 2:
+                # Assigning values to the formula's variables
+                p = money_depositing
+                r = interest_rate / 100
+                t = years
 
-    # Calculating final amount using compound interest
-    else:
-        # Assigning values to the formula's variables
-        P = money_depositing
-        r = interest_rate / 100
-        t = years
+                # Formula for calculating compound interest
+                a = p * math.pow((1 + r), t)
 
-        # Formula for calculating compound interest
-        A = P * math.pow((1 + r), t)
+                # Rounding to two decimal place
+                a = round(a, 2)
+                print(f"\nThe final amount when using compound interest with monthly payment of R{p} \n"
+                      f"for {years} years with an interest rate of {interest_rate}% is R{p}\n")
+                break
 
-        # Rounding to two decimal place
-        A = round(A, 2)
-        print(f"\nThe final amount when using compound interest with monthly payment of R{P} \n"
-              f"for {years} years with an interest of {interest_rate}% is R{A}")
-
-# Calculating bond payment
-else:
-
-    # Requesting inputs from user
-    present_value_ = int(input("Please enter the present value: \n"))
-    interest_rate = int(input("Enter interest rate: \n"))
-    number_of_months = int(input("Enter number of months to repay the bond: \n"))
-
-    # Assigning values to the formula's variables
-    P = present_value_
-    n = number_of_months
-    i = interest_rate / 12
-
-    # Rounding to two decimal place
-    i = round(i, 2)
-
-    # Calculating the total amount to be repaid
-    x = (i*P)/(1 - math.pow((1 + i), (-n)))
-    x = round(x, 2)
-    print(f"\nThe total amount to be repaid is R{x} with an interest of {i} \n"
-          f"with a present value of R{P} that is paid for a period of  {n} months.")
+        except ValueError:
+            print("Wrong selection try again: ")
+            continue
 
 
+def bond_calculator() -> None:
+    """
+    This function calculates the amount to be paid on monthly basis for a bond.
+    :return:
+    """
+    while True:
+        try:
+            print("Welcome to the bond calculator.")
+            # Requesting inputs from user
+            present_value_: int = int(input("Please enter the present value: \n"))
+            interest_rate: int = int(input("Enter interest rate: \n"))
+            number_of_months: int = int(input("Enter number of months to repay the bond: \n"))
 
+            # Assigning values to the formula's variables
+            p = present_value_
+            n = number_of_months
+            i = interest_rate / 12
+
+            # Rounding to two decimal place
+            i = round(i, 2)
+
+            # Calculating the total amount to be repaid
+            x = (i * p) / (1 - math.pow((1 + i), (-n)))
+            x = round(x, 2)
+            total = x + p
+            print(f"\nThe amount to be paid every month is R{x} with an interest rate of {i}% \n"
+                  f"with a present value of R{p} that is paid for a period of  {n} months, \nand it will accumulate to"
+                  f" R{total}\n")
+            break
+
+        except ValueError:
+            print("Wrong input please enter numbers only, try again: ")
+            continue
+
+
+def main() -> None:
+    """
+    This function serves as the entry point this software, it provides the user with options
+    to use the software
+    :return:
+    """
+    while True:
+        choose_calculator: str = input("Enter i for investment and b for bond: "
+                                       "\n-investment to calculate the amount of interest you'll earn on interest "
+                                       "\n-bond to calculate the amount of interest you'll pay: \n").lower()
+
+        menu: list = ['i', 'b']
+
+        if choose_calculator == 'i':
+            investment_calculator()
+
+        if choose_calculator == 'b':
+            bond_calculator()
+
+        if choose_calculator not in menu:
+            print("Wrong selection please enter i or b, try again: ")
+            continue
+
+
+if __name__ == '__main__':
+    main()
